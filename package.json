@@ -1,0 +1,19 @@
+{
+  "name": "vue_intrange",
+  "version": "1.0.0",
+  "description": "Limit the min and max values of the input box that can only enter positive integers",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/FridaS/vue_intRange.git"
+  },
+  "author": "FridaS",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/FridaS/vue_intRange/issues"
+  },
+  "homepage": "https://github.com/FridaS/vue_intRange#readme"
+}
