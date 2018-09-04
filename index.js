@@ -1,5 +1,5 @@
 /**
- * 限制input:1)只能输入正整数和0，2）输入的最小值min，3）输入的最大值max
+ * 限制input:1)只能输入正整数和0，2）输入的最小值min，3）输入的最大值max，4）输入的最大长度
  *
  * 用法1：
  * <el-input v-model="test" v-intRange:test="{max: 99}"></el-input>
@@ -14,7 +14,8 @@
  * 指令参数：
  * @param {String} field 需要改变的组件data中的字段（具体访问路径）
  * @param {Number} min 可输入的最小值，可缺省
- * @param {Number} max 可输入的最大值
+ * @param {Number} max 可输入的最大值，可缺省
+ * @param {Number} maxlength 可输入的最大字符长度，可缺省
  */
 
 let IntRangePlugin = {}
@@ -24,10 +25,18 @@ IntRangePlugin.install = (Vue, options) => {
         componentUpdated: (el, binding, vnode) => {
             let arg = binding.arg
             let paramsObj = binding.value
-            let { field, min, max } = arg ? { field: arg, min: paramsObj.min, max: paramsObj.max } : binding.value
-            min = parseInt(min || 0) // min可缺省
-            max = parseInt(max)
-            if (!field || isNaN(min) || isNaN(max) || min > max) {
+            let { field, min, max, maxlength } = arg ? { field: arg, min: paramsObj.min, max: paramsObj.max, maxlength: paramsObj.maxlength } : binding.value
+
+            if (min !== undefined) {
+              min = parseInt(min)
+            }
+            if (max !== undefined) {
+              max = parseInt(max)
+            }
+            if (maxlength !== undefined) {
+              maxlength = parseInt(maxlength)
+            }
+            if (!field || (min!==undefined && isNaN(min)) || (max!==undefined && isNaN(max)) || min > max || (maxlength!==undefined && isNaN(maxlength))) {
                 throw new Error('指令参数错误！')
             }
 
@@ -45,12 +54,15 @@ IntRangePlugin.install = (Vue, options) => {
             }
 
             let val = inputTarget.value
-            let newVal = val.replace(/[^\d]/g,'')
-            if (newVal < min) {
+            let newVal = val.replace(/[^\d]/g, '')
+            if (min !== undefined && newVal < min) {
                 newVal = min
             }
-            if (newVal > max) {
+            if (max !== undefined && newVal > max) {
                 newVal = newVal.substring(0, newVal.length - 1)
+            }
+            if (maxlength !== undefined && newVal.length > maxlength) {
+              newVal = newVal.substring(0, maxlength)
             }
 
             // 修改目标字段

@@ -1,7 +1,7 @@
 {
   "name": "vue_intrange",
-  "version": "1.0.0",
-  "description": "Limit the min and max values of the input box that can only enter positive integers",
+  "version": "1.0.2",
+  "description": "Limit the min、max values and max input length of the input box that can only enter positive integers",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
